@@ -1,15 +1,26 @@
 package interfaces;
 
-import matrixG.NodeM;
+import java.util.ArrayList;
 
-public interface IGraphM<T> {
-	
-	public void addNodeM(T key);
-	public void addEdge(T key, T key2, double dis);
-	public NodeM<T> searchNodeM(T key);
-	public void deleteNodeM(T key);
-	public void deleteEdge(T key, T key2);
-	public boolean adjacentNodeM(T key, T key2);
-	public double getDistance(T key, T key2);
-	public int getPosN(T key);
+import graph.VertexM;
+
+public interface IGraphM<V,E extends Comparable<E>> {
+    void addVertex(V v);
+
+    void addConection(int position1 , int  position2 , E conection);
+
+    ArrayList<VertexM> getAdyacencyList(int positionNode);
+
+    void deleteVertex(int positionNode);
+
+    void deleteEdge(int position1, int position2);
+
+    ArrayList<VertexM<V>> DFS(int startPosition);
+
+    ArrayList<VertexM<V>> BFS(int startPosition);
+
+    ArrayList<ArrayList<VertexM<V>>> DFS();
+
+    ArrayList<ArrayList<VertexM<V>>> BFS();
+
 }
