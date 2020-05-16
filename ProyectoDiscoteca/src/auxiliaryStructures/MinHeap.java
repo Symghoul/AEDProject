@@ -26,17 +26,17 @@ public class MinHeap<V extends Comparable<V>> implements IMinHeap<V> {
         return max_size;
     }
 
-    @Override
+   
     public int parent(int i) {
         return (i%2 == 0)? i/2 - 1 : i/2;
     }
 
-    @Override
+    
     public int left(int i) {
         return i*2 + 1;
     }
 
-    @Override
+    
     public int right(int i) {
         return i*2 + 2;
     }
@@ -52,7 +52,7 @@ public class MinHeap<V extends Comparable<V>> implements IMinHeap<V> {
         heap.set(index2, temp);
     }
 
-    @Override
+    
     public void min_heapify(int i) {
         int left = left(i);
         int right = right(i);
@@ -69,13 +69,13 @@ public class MinHeap<V extends Comparable<V>> implements IMinHeap<V> {
         }
     }
 
-    @Override
+    
     public void build_min_heap() {
         for(int i =  heap_size/2 - 1; i >= 0; i--)
             min_heapify(i);
     }
 
-    @Override
+    
     public void heapsort() {
         build_min_heap();
         int temp_heap_size = heap_size;

@@ -12,19 +12,19 @@ public class MaxPriorityQueue<V extends Comparable<V>> extends MaxHeap<V> implem
         build_max_heap();
     }
 
-    @Override
+    
     public void insert(V element) throws SmallerKeyException, HeapUnderFlowException {
         heap_size++;
         heap.add(element);
         increase_key(heap_size - 1, element);
     }
 
-    @Override
+    
     public V maximum() throws HeapUnderFlowException {
         return get(0);
     }
 
-    @Override
+    
     public V extract_max() throws HeapUnderFlowException {
         if(isEmpty())
             throw new HeapUnderFlowException();
@@ -35,7 +35,7 @@ public class MaxPriorityQueue<V extends Comparable<V>> extends MaxHeap<V> implem
         return max;
     }
 
-    @Override
+    
     public void increase_key(int i, V value) throws SmallerKeyException, HeapUnderFlowException {
         if(value.compareTo(get(i)) < 0)
             throw new SmallerKeyException();
@@ -44,7 +44,7 @@ public class MaxPriorityQueue<V extends Comparable<V>> extends MaxHeap<V> implem
             exchange(i, parent(i));
     }
 
-    @Override
+   
     public boolean isEmpty() {
         return heap_size == 0;
     }

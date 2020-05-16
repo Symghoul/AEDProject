@@ -32,7 +32,7 @@ public class DisjointSet implements IDisjointSet {
 		this.root = root;
 	}
 
-	@Override
+	
     public int find(int x) {
         if(x == parent[x])
             return x;
@@ -40,7 +40,7 @@ public class DisjointSet implements IDisjointSet {
             return parent[x] = find(parent[x]);
     }
 
-    @Override
+    
     public void union(int x, int y) {
         int xRoot = find(x);
         int yRoot = find(y);
@@ -48,7 +48,7 @@ public class DisjointSet implements IDisjointSet {
         rank[yRoot] = rank[xRoot] + 1;
     }
 
-    @Override
+ 
     public void union_by_rank(int x, int y) {
         int xRoot = find(x);
         int yRoot = find(y);
@@ -64,12 +64,12 @@ public class DisjointSet implements IDisjointSet {
         }
     }
 
-    @Override
+    
     public boolean same_component(int x, int y) {
         return find(x) == find(y);
     }
 
-    @Override
+    
     public int connected_components() {
         numberComponents = 0;
         for(int i = 0; i < size; i++){
@@ -80,7 +80,7 @@ public class DisjointSet implements IDisjointSet {
         return numberComponents;
     }
 
-    @Override
+   
     public int[] nodes_numbers_by_components() {
         for(int i = 0; i < size; i++){
             nodes[find(i)]++;

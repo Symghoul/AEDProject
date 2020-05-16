@@ -27,9 +27,9 @@ public class Queue<T> implements IQueue<T> {
 		return tail;
 	}
 
-	@Override
+	
 	public void enqueue(T data) {
-		QueueNode<T> newNode = new QueueNode<>(data);
+		QueueNode<T> newNode = new QueueNode<T>(data);
 		if(isEmpty()) {
 			tail = newNode;
 			head = newNode;
@@ -41,7 +41,7 @@ public class Queue<T> implements IQueue<T> {
 		size++;
 	}
 
-	@Override
+	
 	public T dequeue() throws UnderflowException {
 		if(isEmpty()) {
 			throw new UnderflowException("Underflow error.");

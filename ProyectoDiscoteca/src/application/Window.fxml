@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="396.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
+   <children>
+      <ImageView fitHeight="405.0" fitWidth="707.0" layoutX="-2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Img/Background.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="67.0" layoutY="14.0" prefHeight="90.0" prefWidth="282.0" text="Son Latino" textFill="#fffefe">
+         <font>
+            <Font name="Mistral" size="72.0" />
+         </font>
+      </Label>
+      <MenuButton blendMode="COLOR_DODGE" layoutX="40.0" layoutY="123.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="324.0" text="Opciones " textAlignment="CENTER">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Cancion que mas gusta" />
+          <MenuItem mnemonicParsing="false" text="Cancion que menos gusta" />
+            <MenuItem mnemonicParsing="false" text="Canciones mas pedidas " />
+        </items>
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </MenuButton>
+      <ListView fx:id="result" blendMode="LIGHTEN" depthTest="DISABLE" layoutX="40.0" layoutY="165.0" opacity="0.8" prefHeight="182.0" prefWidth="324.0" />
+   </children>
+</Pane>

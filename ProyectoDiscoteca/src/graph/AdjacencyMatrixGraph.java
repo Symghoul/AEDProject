@@ -30,14 +30,14 @@ public class AdjacencyMatrixGraph<V extends Comparable<V>, E extends Comparable<
 
     }
 
-    @Override
+    
     public void insertVertex(V value) {
         elementsReference.add(new VertexM<>(value));
         nVertex++;
         visitedG = new boolean[nVertex];
     }
 
-    @Override
+   
     public void insertEdge(int position1, int position2, E conection) {
         if(directed){
             matrixAdyacency[position1][position2] = new EdgeM(conection,elementsReference.get(position1),elementsReference.get(position2));
@@ -90,7 +90,7 @@ public class AdjacencyMatrixGraph<V extends Comparable<V>, E extends Comparable<
 
     }
 
-    @Override
+   
     public void deleteEdge(int position1, int position2, E conection) {
         if(directed){
             matrixAdyacency[position1][position2] = null;
@@ -101,7 +101,7 @@ public class AdjacencyMatrixGraph<V extends Comparable<V>, E extends Comparable<
 
     }
 
-    @Override
+    
     public void deleteAllEdge(int position1, int position2) {
         if(directed){
             matrixAdyacency[position1][position2] = null;
@@ -115,8 +115,7 @@ public class AdjacencyMatrixGraph<V extends Comparable<V>, E extends Comparable<
         return elementsReference;
     }
 
-    //Veloza
-    @Override
+  
     public ArrayList<Integer> BFS(int startPosition) {
 
         if(elementsReference.get(startPosition) == null){
@@ -190,8 +189,7 @@ public class AdjacencyMatrixGraph<V extends Comparable<V>, E extends Comparable<
         return Solution;
     }
 
-    //Fabio
-    @Override
+   
     public ArrayList<ArrayList<Integer>> DFS() {
         ArrayList<ArrayList<Integer>> Solution = new ArrayList<>();
         visitedG = new boolean[elementsReference.size()];
@@ -205,7 +203,7 @@ public class AdjacencyMatrixGraph<V extends Comparable<V>, E extends Comparable<
         return Solution;
     }
 
-    //Nelson
+  
 
     public static class pair implements Comparable<pair>{
 
@@ -225,7 +223,7 @@ public class AdjacencyMatrixGraph<V extends Comparable<V>, E extends Comparable<
             return distancia;
         }
 
-        @Override
+      
         public int compareTo(pair p) {
             if(this.distancia>p.distancia){
                 return  1;
@@ -237,7 +235,7 @@ public class AdjacencyMatrixGraph<V extends Comparable<V>, E extends Comparable<
     }
 
 
-    @Override
+   
     public ArrayList<Integer> Prim(int startPosition) {
         ArrayList<Integer> Solution = new ArrayList<>();
         int V = nVertex;
@@ -336,17 +334,13 @@ public class AdjacencyMatrixGraph<V extends Comparable<V>, E extends Comparable<
         return min_index;
     }
 
-    //Nelson
-    @Override
+   
     public ArrayList<EdgeL<V, E>> Kruskal() {
         return null;
     }
 
 
-
-
-    //Nelson
-    @Override
+   
     public Object[] Dijsktra(int startPosition) {
         Object[] arrays = new Object[2];
         int V = nVertex;
@@ -356,8 +350,6 @@ public class AdjacencyMatrixGraph<V extends Comparable<V>, E extends Comparable<
 
         PriorityQueue<VertexM> minDistance = new PriorityQueue<>();
 
-
-
         for (int i = 0; i < V; i++)
         {
             dist[i] = Double.MAX_VALUE;
@@ -366,7 +358,6 @@ public class AdjacencyMatrixGraph<V extends Comparable<V>, E extends Comparable<
         }
 
         dist[startPosition] = 0;
-
 
         for (int count = 0; count < V-1; count++)
         {
@@ -378,13 +369,7 @@ public class AdjacencyMatrixGraph<V extends Comparable<V>, E extends Comparable<
             // Mark the picked vertex as processed
             sptSet[u] = true;
 
-            // Update dist value of the adjacent vertices of the
-            // picked vertex.
             for (int v = 0; v < V; v++) {
-
-                // Update dist[v] only if is not in sptSet, there is an
-                // edge from u to v, and total weight of path from src to
-                // v through u is smaller than current value of dist[v]
 
                 double c = new Double((int)matrixAdyacency[u][v].getValue());
 
@@ -410,8 +395,7 @@ public class AdjacencyMatrixGraph<V extends Comparable<V>, E extends Comparable<
         return arrays;
     }
 
-    //Veloza
-    @Override
+
     public double[][] Floyd_Warshal() {
         int V = matrixAdyacency.length;
         double dist[][] = new double[matrixAdyacency.length][matrixAdyacency.length];
