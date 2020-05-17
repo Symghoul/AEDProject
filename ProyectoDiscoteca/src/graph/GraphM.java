@@ -80,12 +80,12 @@ public class GraphM<V> implements IGraph<V>{
     }
 
     @Override
-    public void insertEdge(int position1, int position2, E conection) {
+    public void insertEdge(int position1, int position2, double conection) {
         if(directed){
-            matrixAdyacency[position1][position2] = new EdgeM(conection,elementsReference.get(position1),elementsReference.get(position2));
+            matrixAdyacency[position1][position2] = new Edge(elementsReference.get(position1),elementsReference.get(position2),conection);
         }else{
-            matrixAdyacency[position1][position2] = new EdgeM(conection,elementsReference.get(position1),elementsReference.get(position2));
-            matrixAdyacency[position2][position1] = new EdgeM(conection,elementsReference.get(position2),elementsReference.get(position1));
+            matrixAdyacency[position1][position2] = new Edge(elementsReference.get(position1),elementsReference.get(position2),conection);
+            matrixAdyacency[position2][position1] = new Edge(elementsReference.get(position2),elementsReference.get(position1),conection);
         }
 
     }
@@ -132,18 +132,16 @@ public class GraphM<V> implements IGraph<V>{
 
     }
 
-    @Override
-    public void deleteEdge(int position1, int position2, E conection) {
+    public void deleteEdge( int labelVertex1, int labelVertex2) throws VertexNotAdjacentException{
         if(directed){
-            matrixAdyacency[position1][position2] = null;
+            matrixAdyacency[labelVertex1][labelVertex2] = null;
         }else{
-            matrixAdyacency[position1][position2] = null;
-            matrixAdyacency[position2][position1] = null;
+            matrixAdyacency[labelVertex1][labelVertex2] = null;
+            matrixAdyacency[labelVertex1][labelVertex2] = null;
         }
 
     }
 
-    @Override
     public void deleteAllEdge(int position1, int position2) {
         if(directed){
             matrixAdyacency[position1][position2] = null;
@@ -196,9 +194,8 @@ public class GraphM<V> implements IGraph<V>{
         return null;
     }
 
-    @Override
     public ArrayList<Integer> DFS(int startPosition) {
-        if(elementsReference.get(startPosition) == null){
+    	if(elementsReference.get(startPosition) == null){
             return null;
         }
 
@@ -388,8 +385,6 @@ public class GraphM<V> implements IGraph<V>{
 
         PriorityQueue<VertexM<V>> minDistance = new PriorityQueue<>();
 
-
-
         for (int i = 0; i < V; i++)
         {
             dist[i] = Double.MAX_VALUE;
@@ -418,7 +413,7 @@ public class GraphM<V> implements IGraph<V>{
                 // edge from u to v, and total weight of path from src to
                 // v through u is smaller than current value of dist[v]
 
-                double c = new Double((int)matrixAdyacency[u][v].getValue());
+                double c = (matrixAdyacency[u][v].getWeight());
 
                 if (!sptSet[v] && matrixAdyacency[u][v] != null &&
                         dist[u] != Double.MAX_VALUE &&
@@ -449,18 +444,17 @@ public class GraphM<V> implements IGraph<V>{
         double dist[][] = new double[matrixAdyacency.length][matrixAdyacency.length];
         int i, j, k;
 
-        for (i = 0; i < matrixAdyacency.length; i++)
-            for (j = 0; j < matrixAdyacency.length; j++)
+        for (i = 0; i < matrixAdyacency.length; i++) {
+            for (j = 0; j < matrixAdyacency.length; j++) {
                 if(matrixAdyacency[i][j] != null){
-                    if (!(matrixAdyacency[i][j].getValue() instanceof Double)){
-                        dist[i][j] = (double)((int)matrixAdyacency[i][j].getValue());
-                    }else{
-                        dist[i][j] = (double)matrixAdyacency[i][j].getValue();
-                    }
+                    
+                	dist[i][j] = (double)matrixAdyacency[i][j].getWeight();
+                    
                 }else{
                     dist[i][j] = Double.MAX_VALUE;
                 }
-
+            }
+        }
         for (k = 0; k < V; k++)
         {
             // Pick all vertices as source one by one
@@ -484,21 +478,24 @@ public class GraphM<V> implements IGraph<V>{
 
 
 	@Override
-	public ArrayList<EdgeL<V, E>> Kruskal() throws HeapUnderFlowException {
+	public ArrayList<Edge> Kruskal() throws HeapUnderFlowException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public VertexL<V> searchVertex(int e) {
-		// TODO Auto-generated method stub
-		return null;
+	public Vertex<V> searchVertex(int e) {
+		
+		return elementsReference.get(e);
 	}
 
 	@Override
 	public boolean isAdjacent(VertexL<V> vertex1, VertexL<V> vertex2) throws VertexNotAdjacentException {
-		// TODO Auto-generated method stub
-		return false;
+		
+		boolean Adjacent = false;
+		if(directed) {
+			matrixAdyacency[]
+		}
 	}
 
 	@Override
@@ -515,12 +512,6 @@ public class GraphM<V> implements IGraph<V>{
 
 	@Override
 	public void insertEdge(VertexL<V> origin, VertexL<V> destiny, double conection) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteEdge(int labelVertex1, int labelVertex2) throws VertexNotAdjacentException {
 		// TODO Auto-generated method stub
 		
 	}

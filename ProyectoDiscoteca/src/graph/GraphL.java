@@ -44,8 +44,11 @@ public class GraphL<V> implements IGraph<V> {
 	}
 
 	@Override
-	public boolean isAdjacent(VertexL<V> vertex1, VertexL<V> vertex2) throws VertexNotAdjacentException {
+	public boolean isAdjacent(int labelO, int labelD) throws VertexNotAdjacentException {
 		
+		VertexL<V> vertex1 = searchVertex(labelO);
+		VertexL<V> vertex2 = searchVertex(labelD);
+
 		boolean adj = true;
 		VertexL<V> vL1 = vertex1.searchAdjacentVertex(vertex2.getLabel());
 		VertexL<V> vL2 = vertex2.searchAdjacentVertex(vertex1.getLabel());
@@ -65,14 +68,15 @@ public class GraphL<V> implements IGraph<V> {
 	}
 
 	@Override
-	public Edge edgeLabel(VertexL<V> origin, VertexL<V> destiny)  throws VertexNotAdjacentException  {
+	public Edge edgeLabel(int origin, int destiny)  throws VertexNotAdjacentException  {
 		
 		Edge e = null;
 		
+		
 		if(isAdjacent(origin, destiny)) {
 							
-			int n = origin.getIndexAdjacentVertex(destiny.getLabel());
-			e = origin.getIncidencyList().get(n);
+			int n = searchVertex(origin).getIndexAdjacentVertex(destiny);
+			e = searchVertex(origin).getIncidencyList().get(n);
 		}
 		return e;
 	}
@@ -86,7 +90,10 @@ public class GraphL<V> implements IGraph<V> {
   }
 
 	@Override
-	public void insertEdge(VertexL<V> origin, VertexL<V> destiny, double conection) {
+	public void insertEdge(int origin1, int destiny1, double conection) {
+		
+		VertexL<V> origin = searchVertex(origin1);
+		VertexL<V> destiny = searchVertex(destiny1);
 		
 		Edge e = new Edge(origin, destiny, conection);
 		if(directed) {
@@ -302,7 +309,7 @@ public class GraphL<V> implements IGraph<V> {
 	}
 
 	@Override
-	public Object[] Dijsktra(int startPosition) throws IndexOutOfBoundsException {
+	public Object[] Dijsktra(int startPosition) throws IndexOutOfBoundsException, VertexNotAdjacentException {
 		Object[] arrays = new Object[2];
 		double[] distances = new double[nVertices];
 		int[] predecessors = new int[nVertices];
@@ -315,12 +322,12 @@ public class GraphL<V> implements IGraph<V> {
 		distances[startPosition] = 0;
 		int minimum = getMinimumVertex(distances, visited);
 		while(minimum >= 0){
-			VertexL<V, Number> u = vertices.get(minimum);
-			int indexOfU = vertices.indexOf(u);
+			VertexL<V> u = vertex.get(minimum);
+			int indexOfU = vertex.indexOf(u);
 			for(int i = 0; i < u.getAdjacencyList().size(); i++){
-				VertexL<V, Number> v = u.getAdjacentVertex(i);
-				int indexOfV = vertices.indexOf(v);
-				ArrayList<EdgeL<V, E>> incidentEdges = getEdges(vertices.indexOf(u), vertices.indexOf(v));
+				VertexL<V> v = u.searchAdjacentVertex(i);
+				int indexOfV = vertex.indexOf(v);
+				ArrayList<Edge> incidentEdges = getEdges(vertex.indexOf(u), vertex.indexOf(v));
 				for(int j = 0; j < incidentEdges.size(); j++){
 					double weight = Double.parseDouble(String.valueOf(incidentEdges.get(j).getWeight()));
 					double sum = (distances[indexOfU] + weight);
@@ -336,6 +343,24 @@ public class GraphL<V> implements IGraph<V> {
 		arrays[0] = distances;
 		arrays[1] = predecessors;
 		return arrays;
+	}
+
+	private ArrayList<Edge> getEdges(int indexOf, int indexOf2) throws VertexNotAdjacentException {
+
+		
+		VertexL<V> iO1 = searchVertex(indexOf);
+		VertexL<V> iO2 = searchVertex(indexOf2);
+		ArrayList<Edge> edges = null;
+		
+		if(!isAdjacent(indexOf, indexOf2))
+			throw new VertexNotAdjacentException("laj cagao we X.X");
+		if(directed)
+			edges.add(iO1.getIncidencyList().get(iO1.getIndexAdjacentVertex(indexOf2))); //Agrega la arista dirigida entre indexOf e IndexOf2
+		else {
+			edges.add(iO1.getIncidencyList().get(iO1.getIndexAdjacentVertex(indexOf2)));
+			edges.add(iO2.getIncidencyList().get(iO2.getIndexAdjacentVertex(indexOf)));
+		}
+		return edges;
 	}
 
 	@Override
@@ -360,29 +385,20 @@ public class GraphL<V> implements IGraph<V> {
         }
         return u;
     }
-//
-//    @Override
-//    public double[][] Floyd_Warshal() {
-//        return new double[0][];
-//    }
-//
-//    public EdgeL<V, E> getMinimunEdge(){
-//        return edges.get(0);
-//    }
-//
-//    public boolean isDirected() {
-//        return directed;
-//    }
+
+    public boolean isDirected() {
+        return directed;
+    }
 //
 //    public boolean isWeighted() {
 //        return weighted;
 //    }
+	
+    public int getNumberOfVertices(){
+        return nVertices;
+    }
 //
-//    public int getNumberOfVertices(){
-//        return nVertices;
-//    }
-//
-//    public int getNumberOfEdges(){
-//        return nEdges;
-//    }
+    public int getNumberOfEdges(){
+        return nEdges;
+    }
 }
