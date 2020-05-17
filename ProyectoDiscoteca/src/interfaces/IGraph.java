@@ -12,7 +12,7 @@ import graph.VertexL;
 
 public interface IGraph<V> {
 	
-	Vertex<V> searchVertex(int e);
+	Vertex<V> searchVertex(V e);
 	boolean isAdjacent(int vertex1, int vertex2) throws VertexNotAdjacentException;
 	boolean isEmpty();
 	Edge edgeLabel(int vertex1, int vertex2) throws VertexNotAdjacentException; 

@@ -7,4 +7,5 @@ public class VertexM<V> extends Vertex<V>{
 		super(v);
 	}
 
+    
 }

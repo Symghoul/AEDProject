@@ -3,6 +3,7 @@ package graph;
 
 import java.util.*;
 
+import auxiliaryStructures.DisjointSet;
 import exception.HeapUnderFlowException;
 import exception.VertexNotAdjacentException;
 import interfaces.IGraph;
@@ -84,7 +85,7 @@ public class GraphM<V> implements IGraph<V>{
 
     @Override
     public void insertVertex(V value) {
-        elementsReference.add(new VertexM<>(value));
+        elementsReference.add(new VertexM<V>(value));
         nVertex++;
         visitedG = new boolean[nVertex];
     }
@@ -101,7 +102,7 @@ public class GraphM<V> implements IGraph<V>{
     }
 
     @Override
-    public void deleteVertex(int positionVertex) {
+    public void deleteVertex(int positionVertex) throws IndexOutOfBoundsException {
         elementsReference.remove(positionVertex);
         nVertex--;
 
@@ -151,15 +152,6 @@ public class GraphM<V> implements IGraph<V>{
             matrixAdyacency[labelVertex1][labelVertex2] = null;
         }
 
-    }
-
-    public void deleteAllEdge(int position1, int position2) {
-        if(directed){
-            matrixAdyacency[position1][position2] = null;
-        }else{
-            matrixAdyacency[position1][position2] = null;
-            matrixAdyacency[position2][position1] = null;
-        }
     }
 
     public ArrayList<VertexM<V>> getVertexM() {
@@ -366,21 +358,21 @@ public class GraphM<V> implements IGraph<V>{
         return result;
     }
 
-    int minKey(double key[], Boolean mstSet[])
-    {
-        // Initialize min value
-        double min = Integer.MAX_VALUE;
-        int min_index=-1;
-
-        for (int v = 0; v < mstSet.length; v++)
-            if (mstSet[v] == false && key[v] < min)
-            {
-                min = key[v];
-                min_index = v;
-            }
-
-        return min_index;
-    }
+//    public int minKey(double key[], Boolean mstSet[])
+//    {
+//        // Initialize min value
+//        double min = Integer.MAX_VALUE;
+//        int min_index=-1;
+//
+//        for (int v = 0; v < mstSet.length; v++)
+//            if (mstSet[v] == false && key[v] < min)
+//            {
+//                min = key[v];
+//                min_index = v;
+//            }
+//
+//        return min_index;
+//    }
 
     @Override
     public Object[] Dijsktra(int startPosition) {
@@ -446,52 +438,99 @@ public class GraphM<V> implements IGraph<V>{
  
     @Override
     public double[][] Floyd_Warshal() {
-        int V = matrixAdyacency.length;
-        double dist[][] = new double[matrixAdyacency.length][matrixAdyacency.length];
+        int v = elementsReference.size();
+        double dist[][] = new double[v][v];
         int i, j, k;
 
-        for (i = 0; i < matrixAdyacency.length; i++) {
-            for (j = 0; j < matrixAdyacency.length; j++) {
-                if(matrixAdyacency[i][j] != null){
-                    
-                	dist[i][j] = (double)matrixAdyacency[i][j].getWeight();
-                    
-                }else{
-                    dist[i][j] = Double.MAX_VALUE;
-                }
+        for (i = 0; i < v; i++) {
+            for (j = 0; j < v; j++) {
+            	
+            	if(i==j)
+            		dist[i][j] = 0;
+            	else {
+	                if(matrixAdyacency[i][j] != null){
+	                    
+	                	dist[i][j] = matrixAdyacency[i][j].getWeight();
+	                    
+	                }else{
+	                    dist[i][j] = Double.MAX_VALUE;
+	                }
+            	}
             }
         }
-        for (k = 0; k < V; k++)
+        for (k = 0; k < v; k++)
         {
             // Pick all vertices as source one by one
-            for (i = 0; i < V; i++)
+            for (i = 0; i < v; i++)
             {
                 // Pick all vertices as destination for the
                 // above picked source
-                for (j = 0; j < V; j++)
+                for (j = 0; j < v; j++)
                 {
                     // If vertex k is on the shortest path from
                     // i to j, then update the value of dist[i][j]
-                    if (dist[i][k] != Double.MAX_VALUE && dist[k][j] != Double.MAX_VALUE && dist[i][k] + dist[k][j] < dist[i][j])
+                    if (dist[i][j] > dist[i][k] + dist[k][j])
                         dist[i][j] = dist[i][k] + dist[k][j];
                 }
             }
         }
-
-
         return dist;
     }
 
 	@Override
 	public ArrayList<Edge> Kruskal() throws HeapUnderFlowException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Vertex<V> searchVertex(int e) {
 		
-		return elementsReference.get(e);
+		double[][] cost = new double[nVertex][nVertex];
+		for(int i = 0; i<cost.length;i++) {
+			for( int j=0; j<cost[i].length;j++) {
+				if(matrixAdyacency[i][j]!=null) {
+					cost[i][j] = matrixAdyacency[i][j].getWeight();
+				}
+			}
+		} kruskal(cost);
+		return null; //HAY QUE CORREGIR¡¡¡¡¡
+	}
+ 
+//  // Finds MST using Kruskal's algorithm 
+	public void  kruskal(double cost[][]) { 
+
+		int parent[] = new int[nVertex];	
+		int mincost = 0; 
+		DisjointSet disjointSet = new DisjointSet(nVertex);
+
+		for (int i = 0; i < nVertex; i++) 
+			parent[i] = i; 
+		  
+// Include minimum weight edges one by one 
+    int edge_count = 0; 
+    while (edge_count < nVertex-1) {
+    	double min = Double.MAX_VALUE;
+    	int a = -1;
+        int b = -1; 
+          
+        for (int i = 0; i < nVertex; i++){ 
+            for (int j = 0; j < nVertex; j++) {
+                if (!disjointSet.sameComponent(i, j)  && cost[i][j] < min) { 
+                    min = cost[i][j]; 
+                    a = i; 
+                    b = j; 
+                } 
+            } 
+        }
+        disjointSet.unionByRank(a, b);  
+    }
+      
+	}
+	@Override
+	public Vertex<V> searchVertex(V e) {
+		
+		Vertex<V> vertex = null;
+		
+		for(int i=0; i<elementsReference.size();i++) {
+			if(elementsReference.get(i).equals(e))
+				vertex = elementsReference.get(i);
+		}
+		return vertex;
 	}
 
 	@Override
@@ -515,7 +554,7 @@ public class GraphM<V> implements IGraph<V>{
 	@Override
 	public boolean isEmpty() {
 
-		return (elementsReference==null);
+		return (elementsReference.size()==0);
 	}
 
 }

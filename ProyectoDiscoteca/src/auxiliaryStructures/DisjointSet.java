@@ -49,7 +49,7 @@ public class DisjointSet implements IDisjointSet {
     }
 
     @Override
-    public void union_by_rank(int x, int y) {
+    public void unionByRank(int x, int y) {
         int xRoot = find(x);
         int yRoot = find(y);
         if(rank[xRoot] == rank[yRoot]){
@@ -65,12 +65,12 @@ public class DisjointSet implements IDisjointSet {
     }
 
     @Override
-    public boolean same_component(int x, int y) {
+    public boolean sameComponent(int x, int y) {
         return find(x) == find(y);
     }
 
     @Override
-    public int connected_components() {
+    public int connectedComponents() {
         numberComponents = 0;
         for(int i = 0; i < size; i++){
             if(find(i) == i){
@@ -81,7 +81,7 @@ public class DisjointSet implements IDisjointSet {
     }
 
     @Override
-    public int[] nodes_numbers_by_components() {
+    public int[] nodesNumbersByComponents() {
         for(int i = 0; i < size; i++){
             nodes[find(i)]++;
         }
