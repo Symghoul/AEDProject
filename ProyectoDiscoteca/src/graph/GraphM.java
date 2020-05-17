@@ -8,6 +8,7 @@ import exception.VertexNotAdjacentException;
 import interfaces.IGraph;
 
 public class GraphM<V> implements IGraph<V>{
+	
     private ArrayList<VertexM<V>> elementsReference;
     private int nVertex;
     private boolean weighted;
@@ -59,6 +60,15 @@ public class GraphM<V> implements IGraph<V>{
     public ArrayList<VertexM<V>> getElementsReference() {
     	return elementsReference;
     }
+    
+	@Override
+	public Edge edgeLabel(int vertex1, int vertex2) throws VertexNotAdjacentException {
+		
+		Edge e = matrixAdyacency[vertex1][vertex2]; 
+		if(e==null)
+			throw new VertexNotAdjacentException("Nanay");
+		return e;
+	}
     
     public void setElementsReference(ArrayList<VertexM<V>> elementsReference) {
     	this.elementsReference = elementsReference;
@@ -132,7 +142,8 @@ public class GraphM<V> implements IGraph<V>{
 
     }
 
-    public void deleteEdge( int labelVertex1, int labelVertex2) throws VertexNotAdjacentException{
+    @Override
+    public void deleteEdge(int labelVertex1, int labelVertex2) throws VertexNotAdjacentException {
         if(directed){
             matrixAdyacency[labelVertex1][labelVertex2] = null;
         }else{
@@ -229,7 +240,6 @@ public class GraphM<V> implements IGraph<V>{
         return Solution;
     }
 
-    
     @Override
     public ArrayList<ArrayList<Integer>> DFS() {
         ArrayList<ArrayList<Integer>> Solution = new ArrayList<>();
@@ -243,8 +253,6 @@ public class GraphM<V> implements IGraph<V>{
 
         return Solution;
     }
-
-    
 
     public static class pair implements Comparable<pair>{
 
@@ -274,7 +282,6 @@ public class GraphM<V> implements IGraph<V>{
             return 0;
         }
     }
-
 
     @Override
     public ArrayList<Integer> Prim(int startPosition) {
@@ -337,7 +344,7 @@ public class GraphM<V> implements IGraph<V>{
 
                 if (matrixAdyacency[u][v] != null){
 
-                    c =(double)((int)matrixAdyacency[u][v].getValue());
+                    c =matrixAdyacency[u][v].getWeight();
                 }
 
                 if (matrixAdyacency[u][v] != null && mstSet[v] == false &&
@@ -436,8 +443,7 @@ public class GraphM<V> implements IGraph<V>{
 
         return arrays;
     }
-
-    
+ 
     @Override
     public double[][] Floyd_Warshal() {
         int V = matrixAdyacency.length;
@@ -476,7 +482,6 @@ public class GraphM<V> implements IGraph<V>{
         return dist;
     }
 
-
 	@Override
 	public ArrayList<Edge> Kruskal() throws HeapUnderFlowException {
 		// TODO Auto-generated method stub
@@ -490,32 +495,27 @@ public class GraphM<V> implements IGraph<V>{
 	}
 
 	@Override
-	public boolean isAdjacent(VertexL<V> vertex1, VertexL<V> vertex2) throws VertexNotAdjacentException {
+	public boolean isAdjacent(int vertex1, int vertex2) throws VertexNotAdjacentException {
 		
 		boolean Adjacent = false;
+		Edge e = null;
 		if(directed) {
-			matrixAdyacency[]
+			e = matrixAdyacency[vertex1][vertex2];
+			Adjacent = true;
+		}else {
+			e = matrixAdyacency[vertex1][vertex2];
+			Adjacent = true;
 		}
+		if(e==null) {
+			throw new VertexNotAdjacentException("No we...");
+		}
+		return Adjacent;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+
+		return (elementsReference==null);
 	}
-
-	@Override
-	public Edge edgeLabel(VertexL<V> vertex1, VertexL<V> vertex2) throws VertexNotAdjacentException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void insertEdge(VertexL<V> origin, VertexL<V> destiny, double conection) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 
 }

@@ -389,10 +389,6 @@ public class GraphL<V> implements IGraph<V> {
     public boolean isDirected() {
         return directed;
     }
-//
-//    public boolean isWeighted() {
-//        return weighted;
-//    }
 	
     public int getNumberOfVertices(){
         return nVertices;
