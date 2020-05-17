@@ -1,17 +1,9 @@
 package graph;
 
-public class VertexM<V> {
-    V value;
+public class VertexM<V> extends Vertex<V>{
 
-    public VertexM(V value) {
-        this.value = value;
-    }
+    public VertexM(V v) {
+		super(v);
+	}
 
-    public V getValue() {
-        return value;
-    }
-
-    public void setValue(V value) {
-        this.value = value;
-    }
 }

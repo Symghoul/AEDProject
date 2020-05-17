@@ -12,19 +12,19 @@ public class MinPriorityQueue<V extends Comparable<V>> extends MinHeap<V> implem
         build_min_heap();
     }
 
-    
+    @Override
     public void insert(V element) throws GreaterKeyException, HeapUnderFlowException {
         heap_size++;
         heap.add(element);
         decrease_key(heap_size - 1, element);
     }
 
-    
+    @Override
     public V minimum() throws HeapUnderFlowException {
         return get(0);
     }
 
-    
+    @Override
     public V extract_min() throws HeapUnderFlowException {
         if(isEmpty())
             throw new HeapUnderFlowException();
@@ -35,7 +35,7 @@ public class MinPriorityQueue<V extends Comparable<V>> extends MinHeap<V> implem
         return min;
     }
 
-    
+    @Override
     public void decrease_key(int i, V value) throws GreaterKeyException, HeapUnderFlowException {
         if(value.compareTo(get(i)) > 0)
             throw new GreaterKeyException();
@@ -44,7 +44,7 @@ public class MinPriorityQueue<V extends Comparable<V>> extends MinHeap<V> implem
             exchange(i, parent(i));
     }
 
-    
+    @Override
     public void decrease_key(V originalValue, V newValue) throws GreaterKeyException, HeapUnderFlowException {
         int i = heap.indexOf(originalValue);
         if(newValue.compareTo(get(i)) > 0)
@@ -54,7 +54,7 @@ public class MinPriorityQueue<V extends Comparable<V>> extends MinHeap<V> implem
             exchange(i, parent(i));
     }
 
-    
+    @Override
     public boolean isEmpty() {
         return heap_size == 0;
     }

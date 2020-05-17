@@ -4,21 +4,25 @@ import java.util.ArrayList;
 
 import exception.GreaterKeyException;
 import exception.HeapUnderFlowException;
-import exception.ThereIsNotAnEdgeException;
 import exception.UnderflowException;
-import graph.EdgeL;
+import exception.VertexNotAdjacentException;
+import graph.Edge;
+import graph.VertexL;
 
-public interface IGraph<V extends Comparable<V>, E extends Comparable<E>> {
+public interface IGraph<V> {
+	
+	VertexL<V> searchVertex(int e);
+	boolean isAdjacent(VertexL<V> vertex1, VertexL<V> vertex2) throws VertexNotAdjacentException;
+	boolean isEmpty();
+	Edge edgeLabel(VertexL<V> vertex1, VertexL<V> vertex2) throws VertexNotAdjacentException; 
     void insertVertex(V value);
-    void insertEdge( int position1, int position2 , E conection);
-    void deleteVertex(int positionVertex);
-    void deleteEdge( int position1, int position2, E conection) throws ThereIsNotAnEdgeException;
-    void deleteAllEdge( int position1, int position2) throws ThereIsNotAnEdgeException;
-    ArrayList<Integer> BFS(int startPosition) throws UnderflowException;
-    ArrayList<Integer> DFS(int startPosition);
-    ArrayList<ArrayList<Integer>> DFS();
-    ArrayList<Integer> Prim(int startPosition) throws GreaterKeyException, HeapUnderFlowException;
-    ArrayList<EdgeL<V, E>> Kruskal() throws HeapUnderFlowException;
-    Object[] Dijsktra(int startPosition);
+    void insertEdge( VertexL<V> origin, VertexL<V> destiny, double conection);
+    void deleteVertex(int labelVertex);
+    void deleteEdge( int labelVertex1, int labelVertex2) throws VertexNotAdjacentException;
+    ArrayList<Integer> BFS(int labelVertexStart) throws UnderflowException;
+    ArrayList<ArrayList<Integer>> DFS(int labelVertexStart);
+    ArrayList<Integer> Prim(int labelVertexStart) throws GreaterKeyException, HeapUnderFlowException;
+    ArrayList<Edge> Kruskal() throws HeapUnderFlowException;
+    Object[] Dijsktra(int labelVertexStart);
     double[][] Floyd_Warshal();
 }

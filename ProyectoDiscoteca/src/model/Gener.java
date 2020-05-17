@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-public class Gener {
+public class Gener implements Comparable<String> {
 
 	private String type;
 	private int positionInList;
@@ -38,12 +38,38 @@ public class Gener {
 		int pos = 0;
 		
 		for(int i = 0; i < songs.size(); i++) {
-			if(songs.get(i).getName().compareToIgnoreCase(s.getName())>0) {
+			if(songs.get(i).compareTo(s.getName())>0) {
 				pos = songs.get(i).getPositionInList();
 			}
 		}
 		
 		return pos;
+	}
+
+	@Override
+	public int compareTo(String o) {
+
+		char[] char1 = type.toCharArray();
+		char[] char2= o.toCharArray();
+		int aux = 0;
+		boolean still = false;
+		int value;
+		if(char1.length<char2.length)
+			value = char1.length;
+		else {
+			value = char2.length;
+		}
+		for(int i=0; i<value &&!still; i++ ) {
+			
+			if(char1[i]<char2[i]) {
+				aux = -1;
+				still = true;
+			}else if(char1[i]<char2[i]) {
+				aux = 1;
+				still = true;
+			}
+		}
+		return aux;
 	}
 
 }

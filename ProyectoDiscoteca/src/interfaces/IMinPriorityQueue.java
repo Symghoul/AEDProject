@@ -3,7 +3,7 @@ package interfaces;
 import exception.GreaterKeyException;
 import exception.HeapUnderFlowException;
 
-public interface IMinPriorityQueue<V extends Comparable<V>> {
+public interface IMinPriorityQueue<V> {
 	
 	void insert(V element) throws GreaterKeyException, HeapUnderFlowException;
 	V minimum() throws HeapUnderFlowException;

@@ -1,6 +1,6 @@
 package interfaces;
 
-public interface IMinHeap<V extends Comparable<V>> {
+public interface IMinHeap<V> {
 	
 	void min_heapify(int i);
 	void build_min_heap();

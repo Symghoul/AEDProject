@@ -10,12 +10,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GraphMTest {
 
-    private AdjacencyMatrixGraph<String, Integer> noDirectedGraph;
+    private GraphM<String, Integer> noDirectedGraph;
 
     //Build scenes
     private void setupScene1(){
 
-        noDirectedGraph = new AdjacencyMatrixGraph<String, Integer>( true, false );
+        noDirectedGraph = new GraphM<String, Integer>( true, false );
 
     }
 

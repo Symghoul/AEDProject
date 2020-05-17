@@ -18,7 +18,7 @@ public class HashMap<K,V> implements IHashMap<K, V> {
 	private int VerifyCollisions(int p) {
 		int a = p;
 		while(container[a] != null){
-			System.out.println(a);
+//			System.out.println(a);
 			a = (java.util.Objects.hash(container[a], a)%container.length);
 		}
 		return a;
@@ -30,7 +30,7 @@ public class HashMap<K,V> implements IHashMap<K, V> {
 		while(container[a] != null && ((NodoHash)container[a]).getActualkey() != key){
 			a = (java.util.Objects.hash(container[a], a)%container.length);
 		}
-		System.out.println("Obtuve" + " " + a);
+//		System.out.println("Obtuve" + " " + a);
 		return (V)((NodoHash)container[a]).getValue();
 	}
 
@@ -42,7 +42,7 @@ public class HashMap<K,V> implements IHashMap<K, V> {
 		while(container[a] != null && ((NodoHash)container[a]).getActualkey() != key){
 			a = (java.util.Objects.hash(container[a], a)%container.length);
 		}
-		System.out.println("Obtuve" + " " + a);
+//		System.out.println("Obtuve" + " " + a);
 		
 		if(container[a] != null) {
 			return false;
