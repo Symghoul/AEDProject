@@ -545,7 +545,7 @@ public class GraphM<V> implements IGraph<V>{
 			e = matrixAdyacency[vertex1][vertex2];
 			Adjacent = true;
 		}
-		if(e==null) {
+		if(e == null) {
 			throw new VertexNotAdjacentException("No we...");
 		}
 		return Adjacent;

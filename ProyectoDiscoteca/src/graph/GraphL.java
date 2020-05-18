@@ -81,6 +81,14 @@ public class GraphL<V> implements IGraph<V> {
 		return e;
 	}
 
+	public ArrayList<VertexL<V>> getVertex() {
+		return vertex;
+	}
+
+	public void setVertex(ArrayList<VertexL<V>> vertex) {
+		this.vertex = vertex;
+	}
+
 	@Override
 	public void insertVertex(V value){
 		VertexL<V> u = new VertexL<>(value);
@@ -345,7 +353,7 @@ public class GraphL<V> implements IGraph<V> {
 		return arrays;
 	}
 
-	private ArrayList<Edge> getEdges(int indexOf, int indexOf2) throws VertexNotAdjacentException {
+	public ArrayList<Edge> getEdges(int indexOf, int indexOf2) throws VertexNotAdjacentException {
 
 		
 		VertexL<V> iO1 = searchVertex(indexOf);
@@ -386,6 +394,9 @@ public class GraphL<V> implements IGraph<V> {
         return u;
     }
 
+    public boolean isWeighted() {
+        return weighted;
+    }
     public boolean isDirected() {
         return directed;
     }
