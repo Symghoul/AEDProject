@@ -300,23 +300,22 @@ public class GraphL<V> implements IGraph<V> {
 		MaxPriorityQueue<Integer> maxPriorityQueueEdges = new MaxPriorityQueue<Integer>(cloneOfEdgesArray, 1000);
 		maxPriorityQueueEdges.heapsort();
 		DisjointSet disjointSet = new DisjointSet(nVertices);
-		Integer labelEdge = null;			//Falta arreglar el error para que te busque la arista con la etiqueta y de ahi para alla terminar de acomodar el algoritmo
-		Edge e = null;
+//		Integer labelEdge = null;			//Falta arreglar el error para que te busque la arista con la etiqueta y de ahi para alla terminar de acomodar el algoritmo
+//		Edge e = null;
 		while(!maxPriorityQueueEdges.isEmpty()) {
-			labelEdge = maxPriorityQueueEdges.extract_max();
+			Integer labelEdge = maxPriorityQueueEdges.extract_max();
+			Edge e = 
 			maxPriorityQueueEdges.heapsort();
 			
-			int indexOfOriginVertex = vertices.indexOf(minEdge.getOriginVertex());
-			int indexOfDestinationVertex = vertices.indexOf(minEdge.getDestinationVertex());
-			if (!disjointSet.same_component(indexOfOriginVertex, indexOfDestinationVertex)) {
-				mst.add(minEdge);
+			int indexOfOriginVertex = vertex.indexOf(labelEdge.getOriginVertex());
+			int indexOfDestinationVertex = vertex.indexOf(labelEdge.getDestinationVertex());
+			if (!disjointSet.sameComponent(indexOfOriginVertex, indexOfDestinationVertex)) {
+				mst.add(labelEdge);
 			}
-			disjointSet.union_by_rank(indexOfOriginVertex, indexOfDestinationVertex);
+			disjointSet.unionByRank(indexOfOriginVertex, indexOfDestinationVertex);
 		}
 		return mst;
-	}
-
-	@Override
+	}	@Override
 	public Object[] Dijsktra(int startPosition) throws IndexOutOfBoundsException, VertexNotAdjacentException {
 		Object[] arrays = new Object[2];
 		double[] distances = new double[nVertices];

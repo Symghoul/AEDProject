@@ -113,5 +113,10 @@ class TestGraphM {
 		setUp1();
 		
 	}
+	
+	@Test
+	public void deleteVertexTest() {
+		
+	}
 
 }
